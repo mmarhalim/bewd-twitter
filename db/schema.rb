@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_12_24_182152) do
+ActiveRecord::Schema.define(version: 2022_12_25_224638) do
 
   create_table "sessions", force: :cascade do |t|
     t.string "token"
@@ -34,8 +34,10 @@ ActiveRecord::Schema.define(version: 2022_12_24_182152) do
     t.string "password"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["password"], name: "index_users_on_password"
-    t.index ["username"], name: "index_users_on_username"
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "sessions", "users"
+  add_foreign_key "tweets", "users"
 end

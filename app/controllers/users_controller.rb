@@ -1,14 +1,9 @@
 class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
+
     if @user.save
-      render json: {
-        user: {
-          username: @user.username
-          email: @user.email
-          password: @user.password
-        }
-      }
+      render 'users/create'
     else
       render json: {
         success: false
@@ -19,7 +14,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:username, :email, :password)
+    params.require(:user).permit(:email, :password, :username)
   end
-
 end
