@@ -24,9 +24,25 @@ class TweetsController < ApplicationController
 
     if session
       user = session.user
-      if user == tweet.user_id
+      if user == tweet.user
         tweet.destroy
       end
+    end
+
+  end
+
+  def index
+    @tweets = Tweet.all
+  end
+
+  def index_by_user
+    token = cookies.signed[:twitter_session_token]
+    session = Session.find_by(token: token)
+
+    if session
+      @tweets = session.user.tasks
+    else
+      render json: { tasks: [] }
     end
 
   end
